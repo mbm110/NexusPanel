@@ -7,7 +7,7 @@
 ## ✨ ویژگی‌ها
 
 - 🔌 **WebSocket** با حداکثر throughput
-- 🌐 **XHTTP Transport** با دو حالت packet-up و stream-up (موتور تطبیقی AIMD)
+- 🌐 **پشتیبانی از پروتکل‌های پیشرفته** با دو حالت مختلف (packet-up و stream-up)
 - 📊 **داشبورد مدیریتی فارسی** (آمار، نمودار، لاگ، مدیریت لینک‌ها)
 - 🔗 **لینک‌های نامحدود** با محدودیت ترافیک (KB/MB/GB)
 - 🚦 **محدودیت سرعت** (Bandwidth Throttling) با الگوی Token Bucket
@@ -60,11 +60,11 @@ git clone https://github.com/YOUR_USER/NexusPanel.git
 2. رمز پیش‌فرض: **NEXUSKING**
 3. از داشبورد لینک‌های فعال بسازید و استفاده کنید
 
-### کانفیگ‌های پشتیبانی‌شده
+### پروتکل‌های پشتیبانی‌شده
 
-- `vless-ws` — WebSocket
-- `xhttp-packet-up` — XHTTP Packet-Up
-- `xhttp-stream-up` — XHTTP Stream-Up
+- `vless-ws` — پیش‌فرض
+- `xhttp-packet-up` — پیشرفته
+- `xhttp-stream-up` — پیشرفته
 
 ---
 
