@@ -19,6 +19,14 @@ state = StateManager(settings)
 
 app = FastAPI(title="NexusProxy", docs_url=None, redoc_url=None)
 
+# ── Startup initialization (sync, runs at import + on each uvicorn start) ─────
+def _init_auth():
+    """Initialize password hash if not already set."""
+    if not AUTH["password_hash"]:
+        AUTH["password_hash"] = make_password_hash(settings.DEFAULT_PASSWORD, settings.secret)
+
+_init_auth()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
