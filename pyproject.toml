@@ -1,5 +1,5 @@
 [project]
-name = "NexusProxy"
+name = "NexusPanel"
 version = "1.0.0"
 description = "VLESS/XHTTP Gateway with Persian web dashboard and Telegram bot"
 requires-python = ">=3.10"

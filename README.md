@@ -1,6 +1,6 @@
-# 🔷 NexusProxy — VLESS/XHTTP Gateway
+# 🔷 NexusPanel
 
-یک دروازه (Gateway) مدرن و سریع برای تونل‌زنی VLESS روی **WebSocket** و **XHTTP**، با **داشبورد مدیریتی فارسی**، **ربات مدیریت تلگرام** و قابلیت ساخت لینک‌های اختصاصی با محدودیت ترافیک، سرعت و آی‌پی.
+یک پنل مدیریت مدرن و سریع برای مدیریت کاربران و سرویس‌ها، با **داشبورد مدیریتی فارسی**، **ربات مدیریت تلگرام** و قابلیت ساخت لینک‌های اختصاصی با محدودیت ترافیک، سرعت و آی‌پی.
 
 > Fork شده از X4G با بازنویسی کامل (Clean Room Implementation) — بدون شباهت کد به پروژه اصلی
 
@@ -25,14 +25,14 @@
 ### ۱. Clone (یا Fork) این ریپازیتوری
 
 ```bash
-git clone https://github.com/YOUR_USER/NexusProxy.git
+git clone https://github.com/YOUR_USER/NexusPanel.git
 ```
 
 ### ۲. Deploy روی Railway
 
 1. وارد [Railway.app](https://railway.app/) شوید
 2. **New Project → Deploy from GitHub repo**
-3. ریپازیتوری NexusProxy را انتخاب کنید
+3. ریپازیتوری NexusPanel را انتخاب کنید
 4. Railway به صورت خودکار Deploy می‌کند
 
 ### ۳. تنظیم دامنه

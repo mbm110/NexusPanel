@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NexusProxy — VLESS/XHTTP Gateway
+NexusPanel — VLESS/XHTTP Gateway
 Entry point for uvicorn.
 """
 
@@ -11,7 +11,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s — %(message)s"
 )
-logger = logging.getLogger("NexusProxy")
+logger = logging.getLogger("NexusPanel")
 
 if __name__ == "__main__":
     import uvicorn
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # Import app to trigger route setup
     from core.app import app
 
-    logger.info(f"NexusProxy starting on port {settings.PORT}")
+    logger.info(f"NexusPanel starting on port {settings.PORT}")
     uvicorn.run(
         app,
         host="0.0.0.0",

@@ -1,5 +1,5 @@
 """
-Telegram bot for NexusProxy — management interface.
+Telegram bot for NexusPanel — management interface.
 """
 
 import asyncio
@@ -73,7 +73,7 @@ def _is_admin(uid: int) -> bool:
 # ── Command handlers ──────────────────────────────────────────────────────────
 async def cmd_start(chat_id: int):
     text = (
-        "🔷 *NexusProxy Bot*\n\n"
+        "🔷 *NexusPanel Bot*\n\n"
         "به ربات مدیریت خوش آمدید!\n\n"
         "/links — لیست لینک‌ها\n"
         "/new — ساخت لینک جدید\n"
@@ -103,7 +103,7 @@ async def cmd_help(chat_id: int):
 async def cmd_stats(chat_id: int, host: str):
     from core.shared import stats, hourly_traffic
     text = (
-        f"📊 *آمار NexusProxy*\n\n"
+        f"📊 *آمار NexusPanel*\n\n"
         f"🔗 لینک‌ها: {len(LINKS)}\n"
         f"📶 ترافیک کل: {fmt_bytes(stats['total_bytes'])}\n"
         f"🔌 اتصال فعال: {stats['active_conns']}\n"
@@ -349,7 +349,7 @@ async def poll(offset: int = 0):
 
         except Exception as e:
             import logging
-            logging.getLogger("NexusProxy.TG").error(f"Poll error: {e}")
+            logging.getLogger("NexusPanel.TG").error(f"Poll error: {e}")
             await asyncio.sleep(5)
 
 
@@ -357,12 +357,12 @@ async def start_bot():
     global _running
     if not BOT_TOKEN or not ADMIN_IDS:
         import logging
-        logging.getLogger("NexusProxy.TG").info("Telegram bot: not configured")
+        logging.getLogger("NexusPanel.TG").info("Telegram bot: not configured")
         return
     _running = True
     asyncio.create_task(poll())
     import logging
-    logging.getLogger("NexusProxy.TG").info(f"Bot started — admins: {ADMIN_IDS}")
+    logging.getLogger("NexusPanel.TG").info(f"Bot started — admins: {ADMIN_IDS}")
 
 
 async def stop_bot():

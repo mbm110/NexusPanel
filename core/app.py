@@ -1,5 +1,5 @@
 """
-NexusProxy — VLESS/XHTTP Gateway
+NexusPanel — VLESS/XHTTP Gateway
 Simplified app.py — uses shared state from core.shared
 """
 
@@ -17,7 +17,7 @@ from core.shared import LINKS, SUBS, AUTH, stats, make_password_hash, now_ir
 settings = Settings()
 state = StateManager(settings)
 
-app = FastAPI(title="NexusProxy", docs_url=None, redoc_url=None)
+app = FastAPI(title="NexusPanel", docs_url=None, redoc_url=None)
 
 # ── Startup initialization (sync, runs at import + on each uvicorn start) ─────
 def _init_auth():
@@ -44,7 +44,7 @@ async def load_state():
         if "password_hash" in data:
             AUTH["password_hash"] = data["password_hash"]
         import logging
-        logging.getLogger("NexusProxy").info(f"Loaded: {len(LINKS)} links, {len(SUBS)} groups")
+        logging.getLogger("NexusPanel").info(f"Loaded: {len(LINKS)} links, {len(SUBS)} groups")
 
 
 async def save_state():
@@ -86,4 +86,4 @@ async def lifespan(app: FastAPI):
 
 app.router.lifespan_context = lifespan
 
-logger = __import__("logging").getLogger("NexusProxy")
+logger = __import__("logging").getLogger("NexusPanel")

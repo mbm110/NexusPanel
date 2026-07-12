@@ -3,7 +3,7 @@ Persian web dashboard — complete HTML/CSS/JS UI.
 """
 
 # Brand name for this fork
-BRAND = "NexusProxy"
+BRAND = "NexusPanel"
 DEFAULT_PASS = "NEXUSKING"
 BRAND_COLOR = "#3B82F6"  # blue theme
 BRAND_COLOR2 = "#8B5CF6"  # purple gradient

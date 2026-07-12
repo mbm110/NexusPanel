@@ -31,7 +31,7 @@ class StateManager:
                 return json.loads(content)
         except Exception as e:
             import logging
-            logging.getLogger("NexusProxy").warning(f"State load failed: {e}")
+            logging.getLogger("NexusPanel").warning(f"State load failed: {e}")
         return None
 
     async def save(self, links: dict, subs: dict, auth: dict):
@@ -51,4 +51,4 @@ class StateManager:
                 tmp.replace(self.settings.DATA_FILE)
             except Exception as e:
                 import logging
-                logging.getLogger("NexusProxy").error(f"State save failed: {e}")
+                logging.getLogger("NexusPanel").error(f"State save failed: {e}")
