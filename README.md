@@ -2,13 +2,11 @@
 
 یک پنل مدیریت مدرن و سریع برای مدیریت کاربران و سرویس‌ها، با **داشبورد مدیریتی فارسی**، **ربات مدیریت تلگرام** و قابلیت ساخت لینک‌های اختصاصی با محدودیت ترافیک، سرعت و آی‌پی.
 
-> Fork شده از X4G با بازنویسی کامل (Clean Room Implementation) — بدون شباهت کد به پروژه اصلی
-
 ---
 
 ## ✨ ویژگی‌ها
 
-- 🔌 **VLESS Relay** روی WebSocket با حداکثر throughput
+- 🔌 **WebSocket** با حداکثر throughput
 - 🌐 **XHTTP Transport** با دو حالت packet-up و stream-up (موتور تطبیقی AIMD)
 - 📊 **داشبورد مدیریتی فارسی** (آمار، نمودار، لاگ، مدیریت لینک‌ها)
 - 🔗 **لینک‌های نامحدود** با محدودیت ترافیک (KB/MB/GB)
@@ -60,11 +58,11 @@ git clone https://github.com/YOUR_USER/NexusPanel.git
 
 1. به **https://your-app.up.railway.app/** بروید
 2. رمز پیش‌فرض: **NEXUSKING**
-3. از داشبورد لینک‌های VLESS بسازید و استفاده کنید
+3. از داشبورد لینک‌های فعال بسازید و استفاده کنید
 
 ### کانفیگ‌های پشتیبانی‌شده
 
-- `vless-ws` — VLESS روی WebSocket
+- `vless-ws` — WebSocket
 - `xhttp-packet-up` — XHTTP Packet-Up
 - `xhttp-stream-up` — XHTTP Stream-Up
 

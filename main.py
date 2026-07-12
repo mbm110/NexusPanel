@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NexusPanel — VLESS/XHTTP Gateway
+NexusPanel — Persian Web Management Panel
 Entry point for uvicorn.
 """
 

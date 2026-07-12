@@ -1,7 +1,7 @@
 [project]
 name = "NexusPanel"
 version = "1.0.0"
-description = "VLESS/XHTTP Gateway with Persian web dashboard and Telegram bot"
+description = "NexusPanel — Persian web management panel"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.104.1",

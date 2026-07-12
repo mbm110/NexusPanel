@@ -257,9 +257,9 @@ async def handle_message(msg: dict):
             w["step"] = "protocol"
             await _send(chat_id,
                 "➕ مرحله ۲ — *پروتکل:*\n\n"
-                "1️⃣ VLESS + WebSocket\n"
-                "2️⃣ XHTTP (packet-up)\n"
-                "3️⃣ XHTTP (stream-up)",
+                "1️⃣ WebSocket\n"
+                "2️⃣ XHTTP Packet-Up\n"
+                "3️⃣ XHTTP Stream-Up",
                 _kb([("❌ لغو", "wizard_cancel")]))
         elif step == "protocol":
             m = {"1": "vless-ws", "2": "xhttp-packet-up", "3": "xhttp-stream-up"}.get(text.strip())

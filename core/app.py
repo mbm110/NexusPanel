@@ -1,5 +1,5 @@
 """
-NexusPanel — VLESS/XHTTP Gateway
+NexusPanel — Persian Web Management Panel
 Simplified app.py — uses shared state from core.shared
 """
 

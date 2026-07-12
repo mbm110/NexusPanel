@@ -73,7 +73,7 @@ input:focus+.ic{{color:var(--accent)}}
   <div class="card">
     <div class="brand">
       <div class="brand-icon">N</div>
-      <div><div class="brand-name">{BRAND}</div><div class="brand-sub">v1.0 — VLESS/XHTTP Gateway</div></div>
+      <div><div class="brand-name">{BRAND}</div><div class="brand-sub">v1.0 — Web Management Panel</div></div>
     </div>
     <h1>ورود به پنل مدیریت</h1>
     <p class="sub">رمز عبور را وارد کنید تا به داشبورد دسترسی پیدا کنید</p>
@@ -256,7 +256,7 @@ i{{font-style:normal}}
     <!-- Links page -->
     <div class="page active" id="page-links">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <h2>🔗 لینک‌های VLESS/XHTTP</h2>
+        <h2>🔗 لینک‌های فعال</h2>
         <div class="add-btn" onclick="showPage('create')">➕ لینک جدید</div>
       </div>
       <div class="link-list" id="link-list"></div>
@@ -274,9 +274,9 @@ i{{font-style:normal}}
           <div class="form-group">
             <label>پروتکل</label>
             <select id="c-protocol">
-              <option value="vless-ws">VLESS + WebSocket</option>
-              <option value="xhttp-packet-up">XHTTP (packet-up)</option>
-              <option value="xhttp-stream-up">XHTTP (stream-up)</option>
+              <option value="vless-ws">WebSocket</option>
+              <option value="xhttp-packet-up">XHTTP Packet-Up</option>
+              <option value="xhttp-stream-up">XHTTP Stream-Up</option>
             </select>
           </div>
           <div class="form-group">
