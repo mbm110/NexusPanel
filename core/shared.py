@@ -107,7 +107,12 @@ def is_link_allowed(link: dict) -> bool:
     exp = link.get("expiry_days")
     if exp:
         try:
-            created = datetime.fromisoformat(link.get("created_at", datetime.now().isoformat()))
+            created_raw = link.get("created_at", "")
+            # created_at might be a string (fresh) or datetime object (from JSON)
+            if hasattr(created_raw, "isoformat"):
+                created = created_raw  # datetime object
+            else:
+                created = datetime.fromisoformat(str(created_raw))
             days = (now_ir() - created.replace(tzinfo=IRAN_TZ)).days
             if days >= int(exp):
                 return False
