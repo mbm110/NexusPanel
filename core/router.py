@@ -3,6 +3,7 @@ Main HTTP/WebSocket router and API endpoints.
 """
 
 import os
+import secrets
 from fastapi import Request, WebSocket, HTTPException
 from fastapi.responses import Response, HTMLResponse, JSONResponse, RedirectResponse
 
@@ -32,6 +33,17 @@ FINGERPRINTS = {
 DEFAULT_FINGERPRINT = "chrome"
 DEFAULT_PORT = 443
 DEFAULT_PROTOCOL = "vless-ws"
+
+
+def _resolve_host(req: Request) -> str:
+    """Resolve host URL for link generation."""
+    domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN", "")
+    if domain:
+        return f"https://{domain}"
+    host = req.headers.get("host", "")
+    if host:
+        return f"https://{host}"
+    return f"{req.url.scheme}://{req.client.host}"
 
 
 def get_client_ip(req: Request) -> str:
@@ -89,7 +101,7 @@ async def api_create_link(request: Request) -> JSONResponse:
         ip_limit=int(body.get("ip_limit", 0) or 0),
         expiry_days=int(body.get("expiry_days", 0) or 0),
     )
-    host = get_host(request)
+    host = _resolve_host(request)
     return JSONResponse({
         "link": link,
         "vless": make_link_url(link, host),
@@ -132,21 +144,11 @@ async def api_logs(request: Request) -> JSONResponse:
     return JSONResponse({"logs": list(error_logs)[-50:]})
 
 
-def get_host(req: Request) -> str:
-    domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN", "")
-    if domain:
-        return f"https://{domain}"
-    host = req.headers.get("host", "")
-    if host:
-        return f"https://{host}"
-    return f"{req.url.scheme}://{req.client.host}"
-
-
 def setup_routes(app, save_fn, host_fn=None):
     """Register all routes on the FastAPI app."""
 
     if host_fn is None:
-        host_fn = get_host
+        host_fn = _resolve_host
 
     from web.pages import LOGIN_HTML, DASHBOARD_HTML
 

@@ -3,8 +3,7 @@ XHTTP Ultra Transport — packet-up and stream-up modes.
 """
 
 import asyncio
-import secrets
-import time
+import os
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import StreamingResponse
 
@@ -14,13 +13,16 @@ from core.shared import (
 )
 from modules.rate_limiter import apply_throttle
 
-router = APIRouter()
+# Module-level constants initialized after imports
 
 XHTTP_BUF = 524288
 SESSION_TIMEOUT = 30
 TCP_TIMEOUT = 10.0
 DOWNLINK_Q = 512
-SOCK_BUF = 2 * 1024 * 1024
+
+# Upstream: configure via env to support different backends
+_UPSTREAM_HOST = os.environ.get("XHTTP_UPSTREAM_HOST", "127.0.0.1")
+_UPSTREAM_PORT = int(os.environ.get("XHTTP_UPSTREAM_PORT", "80"))
 
 
 def _headers(fp: str) -> dict:
@@ -74,7 +76,7 @@ async def handle_xhttp_request(request: Request, uid: str) -> StreamingResponse:
 
     try:
         reader, writer = await asyncio.wait_for(
-            asyncio.open_connection("127.0.0.1", 80),
+            asyncio.open_connection(_UPSTREAM_HOST, _UPSTREAM_PORT),
             timeout=TCP_TIMEOUT,
         )
     except Exception:
@@ -117,7 +119,7 @@ async def handle_xhttp_stream(request: Request, uid: str) -> StreamingResponse:
 
     try:
         reader, writer = await asyncio.wait_for(
-            asyncio.open_connection("127.0.0.1", 80),
+            asyncio.open_connection(_UPSTREAM_HOST, _UPSTREAM_PORT),
             timeout=TCP_TIMEOUT,
         )
     except Exception:

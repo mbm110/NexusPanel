@@ -7,9 +7,11 @@ import time
 
 from core.shared import LINKS
 
-_rate_buckets = {}
-MIN_RATE = 1024
-MIN_BURST = 16384
+_rate_buckets: dict[str, object] = {}
+_bucket_locks: dict[str, asyncio.Lock] = {}
+_per_uid_lock = asyncio.Lock()
+MIN_RATE = 1024  # 1 KB/s floor
+MIN_BURST = 16384  # 16 KB burst floor
 
 
 class TokenBucket:
@@ -18,7 +20,7 @@ class TokenBucket:
     def __init__(self, rate: int):
         self.rate = max(rate, MIN_RATE)
         self.capacity = max(self.rate, MIN_BURST)
-        self.tokens = self.capacity
+        self.tokens = float(self.capacity)
         self.last_refill = time.monotonic()
 
     def refill(self):
@@ -35,14 +37,11 @@ class TokenBucket:
                 self.tokens -= n
                 return
             deficit = n - self.tokens
-            await asyncio.sleep(min(deficit / self.rate, 0.5))
-
-
-_bucket_lock = asyncio.Lock()
+            await asyncio.sleep(min(deficit / self.rate, 0.25))
 
 
 async def apply_throttle(uid: str, nbytes: int):
-    """Throttle if link has speed_limit_bytes > 0."""
+    """Throttle per-link with per-uid lock (non‑blocking across links)."""
     if nbytes <= 0:
         return
     link = LINKS.get(uid)
@@ -51,13 +50,20 @@ async def apply_throttle(uid: str, nbytes: int):
     limit = int(link.get("speed_limit_bytes", 0) or 0)
     if limit <= 0:
         return
-    async with _bucket_lock:
+
+    # Per-uid bucket + lock so one slow bucket never blocks another
+    async with _per_uid_lock:
+        if uid not in _bucket_locks:
+            _bucket_locks[uid] = asyncio.Lock()
         bucket = _rate_buckets.get(uid)
         if bucket is None or bucket.rate != limit:
             bucket = TokenBucket(limit)
             _rate_buckets[uid] = bucket
-    await bucket.consume(nbytes)
+
+    async with _bucket_locks[uid]:
+        await bucket.consume(nbytes)
 
 
 def reset_throttle(uid: str):
     _rate_buckets.pop(uid, None)
+    _bucket_locks.pop(uid, None)

@@ -159,30 +159,32 @@ def set_link_active(uid: str, active: bool) -> bool:
 
 # ── Link URL generation ──────────────────────────────────────────────────────
 def make_link_url(link: dict, host: str) -> str:
+    import urllib.parse
     uid = link["id"]
     fp = link.get("fingerprint", DEFAULT_FINGERPRINT)
     proto = link.get("protocol", "vless-ws")
-    port = link.get("port", DEFAULT_PORT)
-    label = link.get("label", uid)
-    sni = host
+    port = int(link.get("port") or DEFAULT_PORT)
+    label = urllib.parse.quote(link.get("label", uid[:8]))
+    sni = host.rstrip("/")
+    alpn = link.get("alpn", "h2")
+    if isinstance(alpn, list):
+        alpn = ",".join(alpn)
 
     if proto == "vless-ws":
-        import urllib.parse
         path = urllib.parse.quote(f"{uid}-wspath")
         return (
-            f"vless://{uid}@{host}:{port}"
+            f"vless://{uid}@{sni}:{port}"
             f"?encryption=none&fp={fp}&path={path}"
-            f"&tls=1&alpn={link.get('alpn','h2')}&sni={sni}&type=ws#—{label}"
+            f"&tls=1&alpn={alpn}&sni={sni}&type=ws#—{label}"
         )
     elif "xhttp" in proto:
-        import urllib.parse
         path = urllib.parse.quote(f"{uid}-xhpath")
         return (
-            f"vless://{uid}@{host}:{port}"
-            f"?encryption=none&fp={fp}&sni={sni}&alpn={link.get('alpn','h2')}"
-            f"&type=http&path={path}&host={host}&mode=multi#—{label}"
+            f"vless://{uid}@{sni}:{port}"
+            f"?encryption=none&fp={fp}&sni={sni}&alpn={alpn}"
+            f"&type=http&path={path}&host={sni}&mode=multi#—{label}"
         )
-    return f"vless://{uid}@{host}:{port}#—{label}"
+    return f"vless://{uid}@{sni}:{port}#—{label}"
 
 
 # ── Sub groups ────────────────────────────────────────────────────────────────

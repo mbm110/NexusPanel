@@ -15,16 +15,15 @@ logger = logging.getLogger("NexusPanel")
 
 if __name__ == "__main__":
     import uvicorn
-    from core.config import Settings
-    settings = Settings()
 
     # Import app to trigger route setup
-    from core.app import app
+    from core.app import app, settings
 
-    logger.info(f"NexusPanel starting on port {settings.PORT}")
+    PORT = int(os.environ.get("PORT", settings.PORT))
+    logger.info(f"NexusPanel starting on port {PORT}")
     uvicorn.run(
         app,
         host="0.0.0.0",
-        port=settings.PORT,
+        port=PORT,
         log_level="info",
     )
