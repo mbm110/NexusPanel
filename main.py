@@ -125,8 +125,8 @@ FINGERPRINTS = ("chrome", "firefox", "safari", "ios", "android", "edge", "360", 
 DEFAULT_FINGERPRINT = "chrome"
 DEFAULT_ALPN_BY_PROTOCOL = {
     "vless-ws": "http/1.1",
-    "xhttp-packet-up": "h2,http/1.1",
-    "xhttp-stream-up": "h2,http/1.1",
+    "xhttp-packet-up": "h2",
+    "xhttp-stream-up": "h2",
 }
 DEFAULT_PORT = 443
 MIN_PORT, MAX_PORT = 1, 65535
